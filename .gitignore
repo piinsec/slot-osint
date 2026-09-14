@@ -1,0 +1,54 @@
+# ===== Secrets (NEVER commit) =====
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+# ===== Telegram Telethon session =====
+scraper/session/
+*.session
+*.session-journal
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+venv/
+env/
+.venv/
+
+# ===== Flask / DB =====
+instance/
+*.db
+*.sqlite
+*.sqlite3
+*.log
+
+# ===== Node / D3 build (ရှိရင်) =====
+node_modules/
+npm-debug.log*
+
+# ===== OS / IDE =====
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~
+
+# ===== Docker =====
+pgdata/
+redis-data/
+
+# ===== Backups / exports =====
+*.csv
+*.json.bak
+backups/

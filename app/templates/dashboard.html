@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block body %}
+<h2>Campaigns</h2>
+<div>
+  <input id="f-country" placeholder="Country (MM, TH...)">
+  <input id="f-game" placeholder="Game keyword">
+  <input id="f-from" type="date">
+  <input id="f-to" type="date">
+  <button onclick="load()">Filter</button>
+</div>
+<hr>
+
+<div style="display:flex; gap:20px; flex-wrap:wrap;">
+  <div style="flex:1; min-width:380px;">
+    <h3>Top ASNs</h3>
+    <canvas id="asnChart" height="180"></canvas>
+  </div>
+  <div style="flex:1; min-width:380px;">
+    <h3>Country breakdown</h3>
+    <canvas id="countryChart" height="180"></canvas>
+  </div>
+</div>
+
+<h3>Campaign Table</h3>
+<table id="tbl">
+  <thead><tr><th>ID</th><th>Name</th><th>Game</th><th>Country</th><th>First seen</th><th>Domains</th></tr></thead>
+  <tbody></tbody>
+</table>
+
+<script>
+async function load() {
+  const q = new URLSearchParams({
+    country: document.getElementById('f-country').value,
+    game:    document.getElementById('f-game').value,
+    from:    document.getElementById('f-from').value,
+    to:      document.getElementById('f-to').value,
+  }).toString();
+
+  const rows = await (await fetch('/api/campaigns?' + q)).json();
+  document.querySelector('#tbl tbody').innerHTML = rows.map(r => `
+    <tr>
+      <td>${r.id}</td><td>${r.name||''}</td><td>${r.game||''}</td>
+      <td><span class="pill">${r.country||'?'}</span></td>
+      <td>${(r.first_seen||'').slice(0,10)}</td>
+      <td>${r.domains.join(', ')}</td>
+    </tr>`).join('');
+}
+
+async function charts() {
+  const asn = await (await fetch('/api/stats/asn')).json();
+  new Chart(document.getElementById('asnChart'), {
+    type:'bar',
+    data:{ labels: asn.slice(0,10).map(a=>a.asn),
+           datasets:[{label:'IPs', data:asn.slice(0,10).map(a=>a.count), backgroundColor:'#58a6ff'}]},
+    options:{ plugins:{ legend:{ display:false } } }
+  });
+
+  const cty = await (await fetch('/api/stats/country')).json();
+  new Chart(document.getElementById('countryChart'), {
+    type:'doughnut',
+    data:{ labels: cty.map(c=>c.country),
+           datasets:[{data: cty.map(c=>c.count), backgroundColor:['#f78166','#58a6ff','#3fb950','#d29922','#a371f7']}]}
+  });
+}
+
+load(); charts();
+</script>
+{% endblock %}

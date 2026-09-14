@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Slot OSINT</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 0; background:#0f1115; color:#e6e6e6; }
+    header { background:#161b22; padding: 12px 20px; border-bottom:1px solid #30363d; }
+    header a { color:#e6e6e6; margin-right:16px; text-decoration:none; }
+    header a:hover { color:#58a6ff; }
+    .container { padding: 20px; }
+    table { width:100%; border-collapse: collapse; }
+    th, td { padding:8px 10px; border-bottom:1px solid #30363d; text-align:left; font-size:14px; }
+    th { background:#161b22; }
+    .pill { padding:2px 8px; border-radius:10px; background:#21262d; font-size:12px; }
+    input, select { background:#0d1117; color:#e6e6e6; border:1px solid #30363d; padding:6px 10px; border-radius:6px; }
+    button { background:#238636; color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <header>
+    <strong>🎰 Slot OSINT</strong>
+    <a href="/">Dashboard</a>
+    <a href="/graph">Network Graph</a>
+    <a href="/api/export/campaigns.csv">Export CSV</a>
+    <a href="/api/export/graph.json">Export JSON</a>
+  </header>
+  <div class="container">{% block body %}{% endblock %}</div>
+</body>
+</html>

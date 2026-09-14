@@ -1,0 +1,16 @@
+
+---
+
+## 📋 အဆင့် ၅ — Git စတင်ပါ
+
+```bash
+cd slot-osint
+
+# Git repo initialize
+git init -b main
+
+# Git user config (တစ်ခါပဲ လုပ်ရမယ်)
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+
+# (Optional) local config ပဲလိုချင် --global ဖျက်ပါ
